@@ -17,12 +17,17 @@
 
 <?php $this->renderPartial("fbjs", array('data'=>$data,'page'=>'')); ?>
 
+<?php //var_dump($data["json"]); 
+
+    preg_match_all("/(https?:\/\/\S+\.(?:jpg|png|jpeg|gif))/", $data["json"]->post->body, $matches);
+?>
+
 <div class="wrapper">
     <div class="innerWrapper">
         <header class="inside_stories">
             <div class="col-md-6 baner_left"> 
                 <a href="<?php echo Yii::app()->createUrl('tab/submit', array('signed_request'=> $this->signed_request)); ?>">
-                    <img src="<?= $this->themeUrl; ?>/images/inner_logo_left.png">
+                    <img src="<?= $this->themeUrl; ?>/images/steemsocial.png" style="width: 50%">
                 </a> 
             </div>
             <div class="col-md-6 baner_right"></div> 
@@ -30,30 +35,30 @@
         <section class="inside_maincontainer"> 
             <div class="inside_content">
                 <div class="backto-gallery">
-                    <a href="<?php echo Yii::app()->createUrl('tab/index', array('signed_request'=> $this->signed_request)); ?>">
-                        <button type="button" class="btn btn-gallery btn-primary">Back to Gallery</button>
+                    <a href="javascript:window.location.href=window.location.href">
+                        <button type="button" class="btn btn-gallery btn-primary">Back to Feeds</button>
                     </a>
                 </div>                 
 
                 <div class="inside_lft_blk GalleryLeft">                        
 
                     <figure>  
-                        <a href="#"><img src="<?php echo $this->assetsUrl; ?>/entries/Invoker250.jpg" width="160"></a>
+                        <a href="#"><img src="<?php echo $matches[0][0]; ?>" width="160"></a>
                     </figure>
 
                 </div>  
 
                 <div class="inside_rgt_blk">
-                    <h2>Cafeteria Experience</h2>
+                    <h2><?php echo $data["json"]->post->title; ?></h2>
                     <span>
-                        <a target="_blank" href="https://www.facebook.com/100006481829705">
-                            <img src="https://graph.facebook.com/100006481829705/picture" width="30" height="30">
+                        <a target="_blank" href="https://steemit.com/@<?php echo $data['author']; ?>">
+                            <img src="<?php echo $data['profile']; ?>" width="30" height="30">
                         </a>
                         <h4>
-                            <a target="_blank" href="https://www.facebook.com/100006481829705">By Jines Farce</a>
+                            <a target="_blank" href="https://steemit.com/@<?php echo $data['author']; ?>">By <?php echo $data['author']; ?></a>
                         </h4>
                     </span>
-                    <p>I was in the cafeteria when I noticed...</p>
+                    <p><?php echo $data["json"]->post->body; ?></p>
                 </div>
                 <div class="clear"></div>
             </div>
@@ -150,61 +155,6 @@
     });
 
     $(document).ready(function(){  
-        var $players = $('.player');
-        var $playButtons = $('.play');
-        var $fullButtons = $('.fullscreen');
-        var $pauseButton = $('.pause');
-        var $toolbar     = $('.toolbar');      
-
-        function onPlayClick(playButton, player, fullButton, pauseButton, optionsBar) {
-            if (player.paused) {
-                player.play();
-            } else {
-                player.pause();
-            }
-
-            if($(playButton).hasClass('video')) {
-                $(playButton).fadeOut();   
-                $(optionsBar).show();
-                player.onended = function(e) {   
-                    $(playButton).fadeIn();
-                    $(optionsBar).fadeOut();
-                };
-            } else if($(playButton).hasClass('music')) {
-                if($(playButton).hasClass('music2')) {
-                    $(playButton).removeClass("music2");
-                } else {
-                    $(playButton).addClass("music2");
-                    player.onended = function(e) {  
-                        $(playButton).removeClass("music2");
-                    };  
-                }
-            }
-
-            $(fullButton).on('click', function(e){
-                // Webkit for video elements only
-                player.webkitEnterFullScreen();
-                player.mozRequestFullScreen(); 
-            });
-
-            $(pauseButton).on('click', function(e) {
-                player.pause();
-                $(playButton).fadeIn();
-                $(optionsBar).fadeOut();
-            });
-        }        
-
-        for(var i = 0; i < $playButtons.length; i++) {
-            var playButton  = $playButtons[i];
-            var player      = $players[i];
-            var fullButton  = $fullButtons[i];
-            var pauseButton = $pauseButton[i];
-            var optionsBar  = $toolbar[i];            
-
-            $(playButton).click(
-                onPlayClick.bind(null, playButton, player, fullButton, pauseButton, optionsBar)
-            );
-        }  
 
     });
 

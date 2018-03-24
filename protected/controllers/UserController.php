@@ -39,6 +39,9 @@ class UserController extends CController
 
     public function __construct($id, $module = null)
     {
+    
+      	// FB Apps Configuration Here
+    	
         if (!isset($_REQUEST['redirect']) && isset($_REQUEST['code'])) {
             //echo '<script>window.top.location.href = "http://iheartdevs.com/apps/neases/tab"</script>';
         }
@@ -46,17 +49,17 @@ class UserController extends CController
         $this->signed_request = Yii::app()->session['signed_request'];  
         $this->image_folder = Yii::app()->basePath . '/../photos';  
         $this->layout = '/layouts/main';        
-        $this->themeUrl = Yii::app()->baseUrl . "/themes/".$this->nowTheme;
+        $this->themeUrl = Yii::app()->baseUrl . "/themes/".$this->nowTheme;        
         $this->image_folder = Yii::app()->basePath . '/../user_assets/entries';  
         $this->assetsUrl = 'http://iheartdevs.com/apps/keeplaosclean/user_assets';
-        $this->mainUrl   = 'http://iheartdevs.com/apps/neases/';
-        $this->canvasPage = "http://iheartdevs.com/apps/neases/"; 
+        
+        //$this->mainUrl   = 'http://iheartdevs.com/apps/neases/';
+        //$this->canvasPage = "http://iheartdevs.com/apps/neases/"; 
 
-		//$this->facebook = $facebook;
-		//$this->fbUser = $facebook->getFbUser();        
-
-
-		parent::__construct($id, $module);
+	//$this->facebook = $facebook;
+	//$this->fbUser = $facebook->getFbUser();  
+   
+	parent::__construct($id, $module);
     }
   
 
@@ -70,9 +73,46 @@ class UserController extends CController
     }
     
     public function actionLoadMore() {
-    var_dump(Yii::app()->request->getParam('data'));
         $data['page'] = 'load';
         $data['entries'] = array();
         $this->renderPartial("/user/load",array('data' => $data));    
+    }    
+    
+    public function actionSingle() {   
+    	$data['page'] = 'single';
+    	$data['vote'] = false;    
+    	
+    	$data['profile'] = $_REQUEST['profile'];
+    	$data['author'] = $_REQUEST['author'];
+	
+	$URL = $_REQUEST['post_url'];
+	
+	$ch = curl_init();
+	curl_setopt ($ch, CURLOPT_URL, $URL);
+	curl_setopt($ch, CURLOPT_ENCODING, '');
+	curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+	$html= curl_exec($ch);
+	curl_close($ch);
+      	$data["json"] = json_decode ($html);
+    	
+    	$this->render("/user/single",array('data' => $data)); 
+    }
+
+    public function actionGetPostData() {   
+    
+        $URL = $_REQUEST['post_url'];
+    
+        $ch = curl_init();
+        curl_setopt ($ch, CURLOPT_URL, $URL);
+        curl_setopt($ch, CURLOPT_ENCODING, '');
+        curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+        $html= curl_exec($ch);
+        curl_close($ch);
+
+        echo $html;
+    }
+
+    public function actionPrivacy() {
+        $this->render("/user/privacy");
     }
 }
