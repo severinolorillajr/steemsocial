@@ -1,5 +1,5 @@
-#Steem Social
-##Easily Share SteemIt Posts
+# Steem Social
+## Easily Share SteemIt Posts
 
 
 #### What is Steem Social?
@@ -28,13 +28,14 @@ This project is a bit broad and might be a little too ambitious, but here are th
 - Browser Plugins (extend sharing capabilities to SteemIt website)
 - Mobile Compatibility (initial goal is to support Mobile Web, site is already viewable but need further UI enhancements)
 - Separate Android and iOS Application
+- Site Analytics
 
 
 The items below are not the major concern as of the moment as most of these may require a little funding. But this is greatly needed moving forward. The Utopian rewards and the support on my posts will be used to fund the project.
 - Revamp the Design
 - Setup a much more suitable hosting and environment for this project
 
-Currently, we have a temporarily staged at https://nihongonewbie.com/user/feed/<username>
+Currently, we are temporarily staged at https://nihongonewbie.com/user/feed/SteemItUser
 
 The site is pretty much a work in progress, but since it's a big one will try to work on this in phases. The first phase includes the initial framework of the project built using Yii and Bootstrap. The initial features includes a capability to pull data from SteemIt via SteemJS, specifically the user information and the blog posts. I have also added a Facebook sharing capability. A lot of work still needs to be done, but as mentioned will go along with it in phases.
 
@@ -44,7 +45,7 @@ The goals for the next phase would be:
 - Revamp UI and other Frontend Enhancements
 
 
-####How to contribute?
+#### How to contribute?
 So far, I was the only one working on this project. But once I already have stable version and release, I will be asking some contributions from other developers as well as there are technologies that I am still not familiar with. This is also a great way to speed up the development process and hopefully the work that we will be doing will benefit the entire SteemIt Community.
 
 As of this stage, most of the work needed are design related. I will be creating tasks requests later on to help me with the project, so I am very much looking forward for everyone's support. There will be bounties but I won't promise much.
